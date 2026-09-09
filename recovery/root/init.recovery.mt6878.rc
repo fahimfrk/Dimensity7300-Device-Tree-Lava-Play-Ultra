@@ -1,4 +1,5 @@
 import /init.recovery.project.rc
+import /trustkernel.rc
 
 on init
     setprop sys.usb.configfs 1
@@ -11,3 +12,57 @@ on fs && property:ro.debuggable=0
 
 on boot
     exec u:r:update_engine:s0 root root -- /system/bin/mtk_plpath_utils
+    mkdir -p /tmp/misc/keystore
+    mkdir -p /tmp/keystore
+    chown -R system:system /tmp/misc 2>/dev/null
+    chmod -R 0775 /tmp/misc 2>/dev/null
+    setprop lava.trust.ready 1
+
+# keymint service
+service vendor.keymint-3-0-trustkernel /vendor/bin/hw/android.hardware.security.keymint@3.0-service.trustkernel
+    class early_hal
+    user system
+    group system drmrpc
+    interface aidl android.hardware.security.keymint.IKeyMintDevice/default
+    interface aidl android.hardware.security.keymint.IRemotelyProvisionedComponent/default
+    interface aidl android.hardware.security.sharedsecret.ISharedSecret/default
+    interface aidl android.hardware.security.secureclock.ISecureClock/default
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    disabled
+    seclabel u:r:recovery:s0
+
+# gatekeeper service
+service vendor.gatekeeper /vendor/bin/hw/android.hardware.gatekeeper-service.trustkernel
+    interface android.hardware.gatekeeper@1.0::IGatekeeper default
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+# keystore
+service keystore2 /system/bin/keystore2 /tmp/misc/keystore
+    class early_hal
+    user system
+    group system keystore readproc log
+    interface aidl android.system.keystore2.IKeystoreService/default
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    disabled
+    seclabel u:r:recovery:s0
+
+# decryption handler
+on property:hwservicemanager.ready=true && property:lava.trust.ready=1
+    start vendor.gatekeeper
+    start vendor.keymint-3-0-trustkernel
+    start keystore2
+
+on property:ro.crypto.state=unsupported
+    stop vendor.keymint-3-0-trustkernel
+    stop vendor.gatekeeper
+
+on property:ro.crypto.state=unencrypted
+    stop vendor.keymint-3-0-trustkernel
+    stop vendor.gatekeeper
+    
+on property:twrp.all.users.decrypted=true
+    stop vendor.keymint-3-0-trustkernel
+    stop vendor.gatekeeper
