@@ -1,0 +1,4 @@
+mtk_disp_notify.ko
+mtk_panel_ext.ko
+focaltech_tp.ko
+i2c-mt65xx.ko
