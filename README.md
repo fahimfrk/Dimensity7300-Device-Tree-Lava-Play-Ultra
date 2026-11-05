@@ -1,35 +1,114 @@
-# WHY THIS PROJECT
-I started this project as a timepass and also to experience the painful process of a compilation of rom.I went through a lot of struggles like 
-bootlooping,debugging,finding correct .ko files and fixing broken dependencies.
+# TWRP Device Tree — Lava Play Ultra 5G
 
-## Development
-Right now ,I have successfully compiled twrp for my device and it is being under rigorous tesiting process and if i feel to release recovery after fixing the problems ,i will share with you guys.
+Device tree for **Lava Play Ultra 5G (LXX521)**, powered by the MediaTek Dimensity 7300.
 
-# Device Tree - Lava Play Ultra 5g 
-## Specifications
+## Device Specifications
 
+| Component | Details |
+|---|---|
+| Device | Lava Play Ultra 5G |
+| Model | LXX521 |
+| SoC | MediaTek Dimensity 7300 |
+| RAM / Storage | 6/8 GB RAM, 128 GB UFS 3.1 |
+| Display | AMOLED, 1200 × 2400 |
+| Android | Android 15 (VNDK 14) |
 
-##### MODEL       -LXX521
-##### NAME        -LAVA PLAY ULTRA
-##### PROCESSOR   -MEDIATEK DIMENSITY 7300
-##### STORAGE     -6/8GB 128GB UFS 3.1
-##### DISPLAY     -1200*2400 (AMOLED)
-##### OS          -ANDROID 15 VNDK 14
+## Development Status
 
-## WORKING ON TWRP
-##### NO BOOTLOOPING
-##### RECOVERY TOUCH WORKS
-##### ADB SIDELOADING WORKS
-##### BASIC OPERATIONS ARE FINE
+TWRP has been successfully compiled and is currently undergoing testing.
 
-## BUGS
-###### PARTITION MOUNT - ERROR(CURRENTLY WORKING ON IT)
-###### CANT INSTALL ZIP FILES (WORKING ON IT)
+**Working**
+- Boots without bootlooping
+- Touchscreen support
+- ADB sideload
+- Basic recovery operations
+- NVRAM, NVDATA, PROINFO and NVCFG backup support
 
-## DEVICE TREE
-If you want to build twrp recovery for dimensity 7300 soc ,you can freely clone my repo and make neccessary changes into it.
-### Dont try to compile as it is on here,because this device tree is highly specific for LAVA PLAY ULTRA 5G.
+**Known Issues**
+- Partition mounting is currently under development.
 
-## CREDITS AND THANK
-###### ---XDA DEVELOPERS (for the references)
+## Build Notes
 
+> **Important:** This device tree is specifically configured for the Lava Play Ultra 5G. Do not expect it to compile or work on other devices without appropriate modifications.
+
+To compile successfully, the TWRP source tree may require a modification to:
+
+`build/core/Makefile`
+
+Replace it with the provided modified Makefile:
+
+**[Modified Makefile — Google Drive](# TWRP Device Tree — Lava Play Ultra 5G
+
+Device tree for **Lava Play Ultra 5G (LXX521)**, powered by the MediaTek Dimensity 7300.
+
+## Device Specifications
+
+| Component | Details |
+|---|---|
+| Device | Lava Play Ultra 5G |
+| Model | LXX521 |
+| SoC | MediaTek Dimensity 7300 |
+| RAM / Storage | 6/8 GB RAM, 128 GB UFS 3.1 |
+| Display | AMOLED, 1200 × 2400 |
+| Android | Android 15 (VNDK 14) |
+
+## Development Status
+
+TWRP has been successfully compiled and is currently undergoing testing.
+
+**Working**
+- Boots without bootlooping
+- Touchscreen support
+- ADB sideload
+- Basic recovery operations
+- NVRAM, NVDATA, PROINFO and NVCFG backup support
+
+**Known Issues**
+- Partition mounting is currently under development.
+
+## Build Notes
+
+> **Important:** This device tree is specifically configured for the Lava Play Ultra 5G. Do not expect it to compile or work on other devices without appropriate modifications.
+
+To compile successfully, the TWRP source tree may require a modification to:
+
+`build/core/Makefile`
+
+Replace it with the provided modified Makefile:
+
+**[Modified Makefile — Google Drive](https://drive.google.com/file/d/1zAbcFdaYvuEvFuEZSlsQuUK6DV3sLPwn/view?usp=drive_link)**
+
+Ensure the source modification is reviewed before building.
+
+## Usage
+
+You are welcome to clone this repository and adapt the device tree for experimentation or development on compatible MediaTek Dimensity 7300 devices.
+
+Please account for device-specific partitions, kernel configuration, vendor dependencies and recovery requirements before attempting a port.
+
+## Disclaimer
+
+This recovery is experimental and is not yet considered stable. Use it at your own risk. Always maintain a backup of important data and stock firmware.
+
+## Credits
+
+- [XDA Developers](https://xdaforums.com/) — References and development resources
+- TWRP Team — Recovery project
+**
+
+Ensure the source modification is reviewed before building.
+
+## Usage
+
+You are welcome to clone this repository and adapt the device tree for experimentation or development on compatible MediaTek Dimensity 7300 devices.
+
+Please account for device-specific partitions, kernel configuration, vendor dependencies and recovery requirements before attempting a port.
+
+## Disclaimer
+
+This recovery is experimental and is not yet considered stable. Use it at your own risk. Always maintain a backup of important data and stock firmware.
+
+## Credits
+
+- [XDA Developers](https://xdaforums.com/) — References and development resources
+- TWRP Team — Recovery project
